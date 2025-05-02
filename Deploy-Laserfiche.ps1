@@ -97,7 +97,7 @@ function Uninstall-LfPreamble {
             $installCommand = "msiexec.exe"
             $installArguments = "/x $($productId) /qn"
             try {
-                $result = Start-Process $installCommand -ArgumentList $installArguments -Wait #-PassThru $result.ExitCode
+                Start-Process $installCommand -ArgumentList $installArguments -Wait
                 Write-Debug "Uninstall command executed for $($foundApp.DisplayName)"
             }
             catch {
@@ -197,7 +197,7 @@ function Install-LfPackage {
 
         # Execute the installation command
         Write-Debug "Attempting to install package with command:  Start-Process $installCommand -ArgumentList $installArguments -Wait"
-        $result = Start-Process $installCommand -ArgumentList $installArguments -Wait #-PassThru $result.ExitCode
+        Start-Process $installCommand -ArgumentList $installArguments -Wait
     }
     # Type: Legacy LF Setup - Uses legacy flags based on Unattended Installation
     elseif($packageJSON.PackageType -eq 'LFSetup'){
@@ -251,7 +251,7 @@ function Uninstall-LfPackage {
         
         # Execute the uninstall command
         Write-Debug "Attempting to uninstall package with command: Start-Process -FilePath $installCommand -ArgumentList $installArguments -Wait"
-        $result = Start-Process -FilePath $installCommand -ArgumentList $installArguments -Wait #-PassThru $result.ExitCode
+        Start-Process -FilePath $installCommand -ArgumentList $installArguments -Wait
     }
     # Unknown package type, throw an exception
     else {
@@ -292,7 +292,7 @@ function Repair-LfPackage {
         
         # Execute the repair command
         Write-Debug "Attempting to repair package with command: Start-Process -FilePath $installCommand -ArgumentList $installArguments -Wait"
-        $result = Start-Process -FilePath $installCommand -ArgumentList $installArguments -Wait #-PassThru $result.ExitCode
+        Start-Process -FilePath $installCommand -ArgumentList $installArguments -Wait
         #Invoke-Expression $installCommand
     }
     # Unknown package type, throw an exception
